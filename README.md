@@ -2,7 +2,7 @@
 
 ## Requirements
 * GNU/Prolog
-* `cut, grep, awk` (try to remove it, just use gprolog things)
+* `echo, grep, awk` (try to remove it, just use gprolog things)
 
 ## Building
 ```sh

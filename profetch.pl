@@ -39,8 +39,9 @@ hostname(Host) :-
     idk(Host).
 
 distro(Distro) :-
-    popen('grep ^ID= /etc/os-release | cut -d= -f2', read, Sin),
-    read_atom(Sin, Distro);
+    popen('echo "\'$(grep ^ID= /etc/os-release)\'"', read, Sin),
+    read_atom(Sin, DistroWithID),
+    sub_atom(DistroWithID, 3, _, 0, Distro);
     idk(Distro).
 
 kernel(Kernel) :-
