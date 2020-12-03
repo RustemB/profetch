@@ -7,19 +7,25 @@ main :-
     ushell(Shell), terminal(Term),
     mem(Mem), swap(Swap),
     editor(Ed), web_browser(Web),
-    format('     username ~~ ~a', [Uname]), nl,
-    format('     hostname ~~ ~a', [Host]), nl,
-    format('       distro ~~ ~a', [Distro]), nl,
-    format('       kernel ~~ ~a', [Kernel]), nl,
-    format('       uptime ~~ ~a', [Uptime]), nl,
-    format(' load average ~~ ~a', [Loadavrg]), nl,
-    format('        shell ~~ ~a', [Shell]), nl,
-    format('     terminal ~~ ~a', [Term]), nl,
-    format('       memory ~~ ~a', [Mem]), nl,
-    format('         swap ~~ ~a', [Swap]), nl,
-    format('       editor ~~ ~a', [Ed]), nl,
-    format('  web browser ~~ ~a', [Web]), nl,
+    fmt('     username', Uname),
+    fmt('     hostname', Host),
+    fmt('       distro', Distro),
+    fmt('       kernel', Kernel),
+    fmt('       uptime', Uptime),
+    fmt(' load average', Loadavrg),
+    fmt('        shell', Shell),
+    fmt('     terminal', Term),
+    fmt('       memory', Mem),
+    fmt('         swap', Swap),
+    fmt('       editor', Ed),
+    fmt('  web browser', Web),
     halt.
+
+fmt(Text, Info) :-
+    put_code(0x1b), write('[1;34m'),
+    write(Text), write(' ~ '),
+    put_code(0x1b), write('[m'),
+    write(Info), nl.
 
 idk(X) :-
     read_token_from_atom('\'unknown :(\'', X).
