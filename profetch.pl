@@ -87,7 +87,7 @@ swap(Swap) :-
 
 editor(Editor) :-
     environ('EDITOR', Editor);
-    environ('VIDUAL', Editor);
+    environ('VISUAL', Editor);
     idk(Editor).
 
 web_browser(Web) :-
