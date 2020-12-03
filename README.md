@@ -16,3 +16,6 @@ $ ./profetch
 
 # TODO
 * try to remove popen and grep with awk
+
+# Links
+inspired by https://gitlab.com/bit9tream/bfetch/-/tree/master
