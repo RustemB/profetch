@@ -58,7 +58,9 @@ uptime(Uptime) :-
     idk(Uptime).
 
 loadavrg(Loadavrg) :-
-    open('/proc/loadavg', read, Sin), read_number(Sin, A), read_number(Sin, B), read_number(Sin, C), close(Sin),
+    open('/proc/loadavg', read, Sin),
+    read_number(Sin, A), read_number(Sin, B), read_number(Sin, C),
+    close(Sin),
     open_output_atom_stream(S),
     format(S, '~2f ~2f ~2f', [A, B, C]),
     close_output_atom_stream(S, Loadavrg);
