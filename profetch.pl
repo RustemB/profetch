@@ -1,6 +1,8 @@
 :- initialization(main).
 
 main :-
+    is_help -> print_help;
+    profetch_version(Version) -> write(Version), nl;
     uname(Uname), hostname(Host),
     distro(Distro), kernel(Kernel), 
     uptime(Uptime), loadavrg(Loadavrg),
@@ -102,3 +104,18 @@ editor(Editor) :-
 web_browser(Web) :-
     environ('BROWSER', Web);
     idk(Web).
+
+is_help :-
+    argument_list(Argv),
+    memberchk('--help', Argv).
+
+profetch_version(Version) :-
+    argument_list(Argv),
+    memberchk('--version', Argv),
+    Version = 'v0.1.0'.
+
+print_help :-
+    write('Usage: profetch [OPTIONS...]'), nl,
+    write('OPTIONS:'), nl,
+    write('    --help        print this message'), nl,
+    write('    --version     print profetch version'), nl.
