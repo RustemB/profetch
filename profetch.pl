@@ -41,31 +41,34 @@ hostname(Host) :-
     idk(Host).
 
 distro(Distro) :-
-    popen('echo "\'$(grep ^ID= /etc/os-release)\'"', read, Sin),
-    read_atom(Sin, DistroWithID),
-    sub_atom(DistroWithID, 3, _, 0, Distro);
+    open('/etc/os-release', read, Stream),
+    distro_search(Stream, Distro),
+    close(Stream);
     idk(Distro).
+
+distro_search(Stream, Distro) :-
+    repeat, (read_token(Stream, var('ID')) -> read_token(Stream, _), read_token(Stream, Distro), ! ; fail).
 
 kernel(Kernel) :-
     os_version(Kernel);
     idk(Kernel).
 
 uptime(Uptime) :-
-    open('/proc/uptime', read, Sin), read_number(Sin, Sec), close(Sin),
-    Hours is floor(Sec / 3600),
-    Minuts is floor((Sec / 60) - (Hours * 60)),
-    open_output_atom_stream(S),
-    format(S, '~dh ~dm', [Hours, Minuts]),
-    close_output_atom_stream(S, Uptime);
+    open('/proc/uptime', read, Stream), read_number(Stream, Seconds), close(Stream),
+    Hours is floor(Seconds / 3600),
+    Minutes is floor((Seconds / 60) - (Hours * 60)),
+    open_output_atom_stream(String),
+    format(String, '~dh ~dm', [Hours, Minutes]),
+    close_output_atom_stream(String, Uptime);
     idk(Uptime).
 
 loadavrg(Loadavrg) :-
-    open('/proc/loadavg', read, Sin),
-    read_number(Sin, A), read_number(Sin, B), read_number(Sin, C),
-    close(Sin),
-    open_output_atom_stream(S),
-    format(S, '~2f ~2f ~2f', [A, B, C]),
-    close_output_atom_stream(S, Loadavrg);
+    open('/proc/loadavg', read, Stream),
+    read_number(Stream, A), read_number(Stream, B), read_number(Stream, C),
+    close(Stream),
+    open_output_atom_stream(String),
+    format(String, '~2f ~2f ~2f', [A, B, C]),
+    close_output_atom_stream(String, Loadavrg);
     idk(Loadavrg).
 
 ushell(Shell) :-
@@ -77,24 +80,36 @@ terminal(Term) :-
     idk(Term).
 
 mem(Mem) :-
-    popen('grep ^MemTotal /proc/meminfo | awk \'{print $2}\'', read, Sin), read_integer(Sin, MemTotal),
-    popen('grep ^MemAvailable /proc/meminfo | awk \'{print $2}\'', read, Sinn), read_integer(Sinn, MemAvailable),
-    open_output_atom_stream(S),
-    MemTaken is floor((MemTotal - MemAvailable) / 1024),
-    MemT is floor(MemTotal / 1024),
-    format(S, '~d MB / ~d MB', [MemTaken, MemT]),
-    close_output_atom_stream(S, Mem);
+    open('/proc/meminfo', read, StreamA), memtotal_search(StreamA, MemTotalInKb), close(StreamA),
+    open('/proc/meminfo', read, StreamB), memavailable_search(StreamB, MemAvailable), close(StreamB),
+    MemUsed is floor((MemTotalInKb - MemAvailable) / 1024),
+    MemTotal is floor(MemTotalInKb / 1024),
+    open_output_atom_stream(String),
+    format(String, '~d MB / ~d MB', [MemUsed, MemTotal]),
+    close_output_atom_stream(String, Mem);
     idk(Mem).
 
+memtotal_search(Stream, MemTotal) :-
+    repeat, (read_token(Stream, var('MemTotal')) -> read_token(Stream, _), read_token(Stream, MemTotal), ! ; fail).
+
+memavailable_search(Stream, MemAvailable) :-
+    repeat, (read_token(Stream, var('MemAvailable')) -> read_token(Stream, _), read_token(Stream, MemAvailable), ! ; fail).
+
 swap(Swap) :-
-    popen('grep ^SwapTotal /proc/meminfo | awk \'{print $2}\'', read, Sin), read_integer(Sin, SwapTotal),
-    popen('grep ^SwapFree /proc/meminfo | awk \'{print $2}\'', read, Sinn), read_integer(Sinn, SwapFree),
-    open_output_atom_stream(S),
-    SwapTaken is floor((SwapTotal - SwapFree) / 1024),
-    SwapT is floor(SwapTotal / 1024),
-    format(S, '~d MB / ~d MB', [SwapTaken, SwapT]),
-    close_output_atom_stream(S, Swap);
+    open('/proc/meminfo', read, StreamA), swaptotal_search(StreamA, SwapTotalInKb), close(StreamA),
+    open('/proc/meminfo', read, StreamB), swapfree_search(StreamB, SwapFree), close(StreamB),
+    open_output_atom_stream(String),
+    SwapUsed is floor((SwapTotalInKb - SwapFree) / 1024),
+    SwapTotal is floor(SwapTotalInKb / 1024),
+    format(String, '~d MB / ~d MB', [SwapUsed, SwapTotal]),
+    close_output_atom_stream(String, Swap);
     idk(Swap).
+
+swaptotal_search(Stream, SwapTotal) :-
+    repeat, (read_token(Stream, var('SwapTotal')) -> read_token(Stream, _), read_token(Stream, SwapTotal), ! ; fail).
+
+swapfree_search(Stream, SwapFree) :-
+    repeat, (read_token(Stream, var('SwapFree')) -> read_token(Stream, _), read_token(Stream, SwapFree), ! ; fail).
 
 editor(Editor) :-
     environ('EDITOR', Editor);
@@ -112,10 +127,11 @@ is_help :-
 profetch_version(Version) :-
     argument_list(Argv),
     memberchk('--version', Argv),
-    Version = 'v0.1.0'.
+    Version = 'v0.1.5'.
 
 print_help :-
-    write('Usage: profetch [OPTIONS...]'), nl,
+    argument_value(0, ProgName),
+    format('Usage: ~a [OPTIONS...]', [ProgName]), nl,
     write('OPTIONS:'), nl,
     write('    --help        print this message'), nl,
     write('    --version     print profetch version'), nl.
