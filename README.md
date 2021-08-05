@@ -3,6 +3,7 @@
 ## Screenshot
 
 ![usage screenshot](https://i.imgur.com/RgbGy58.jpg)
+By [q60](https://github.com/q60)
 
 ## Requirements
 
