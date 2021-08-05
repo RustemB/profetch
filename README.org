@@ -1,42 +1,24 @@
 * profetch
-  :PROPERTIES:
-  :CUSTOM_ID: profetch
-  :END:
 ** Screenshot
-   :PROPERTIES:
-   :CUSTOM_ID: screenshot
-   :END:
-#+CAPTURE: Screenshot by q60
-#+NAME: fig:profetch
 [[https://i.imgur.com/RgbGy58.jpg]]
 
 By [[https://github.com/q60][q60]]
 
 ** Requirements
-   :PROPERTIES:
-   :CUSTOM_ID: requirements
-   :END:
 
 - GNU/Prolog
 
 ** Building
-   :PROPERTIES:
-   :CUSTOM_ID: building
-   :END:
 #+begin_example
   $ ./build.sh
 #+end_example
 
 ** Using
-   :PROPERTIES:
-   :CUSTOM_ID: using
-   :END:
 #+begin_example
   $ ./profetch
 #+end_example
 
 * Links
-  :PROPERTIES:
-  :CUSTOM_ID: links
-  :END:
-Inspired by [[https://gitlab.com/bit9tream/bfetch/-/tree/master]]
+
+- Inspired by [[https://gitlab.com/bit9tream/bfetch/-/tree/master][bfetch]] by [[https://gitlab.com/bit9tream][bit9tream]]
+- For ArchLinux Users: [[https://aur.archlinux.org/packages/profetch/][AUR]]
