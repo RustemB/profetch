@@ -1,8 +1,11 @@
 * profetch
-** Screenshot
-[[https://i.imgur.com/RgbGy58.jpg]]
+** Screenshots
 
-By [[https://github.com/q60][q60]]
+| [[https://i.imgur.com/RgbGy58.jpg]] |
+| By [[https://github.com/q60][q60]]                          |
+|---------------------------------|
+| [[https://i.imgur.com/HKzf5DT.png]] |
+| By me                           |
 
 ** Requirements
 
