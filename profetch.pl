@@ -127,7 +127,7 @@ is_help :-
 profetch_version(Version) :-
     argument_list(Argv),
     memberchk('--version', Argv),
-    Version = 'v0.1.5'.
+    Version = 'v0.1.6'.
 
 print_help :-
     argument_value(0, ProgName),
