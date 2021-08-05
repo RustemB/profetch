@@ -7,6 +7,7 @@
    :CUSTOM_ID: screenshot
    :END:
 #+CAPTURE: Screenshot by q60
+#+NAME: fig:profetch
 [[[[https://i.imgur.com/RgbGy58.jpg]]]] By [[https://github.com/q60][q60]]
 
 ** Requirements
