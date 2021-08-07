@@ -1,3 +1,5 @@
+%%% -*- mode: prolog; -*-
+
 :- initialization(main).
 
 main :-
