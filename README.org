@@ -10,15 +10,21 @@
 ** Requirements
 
 - GNU/Prolog
+- Make
 
 ** Building
 #+begin_example
-  $ ./build.sh
+  $ make
 #+end_example
 
 ** Using
 #+begin_example
   $ ./profetch
+#+end_example
+
+** Installing
+#+begin_example
+  $ sudo make install
 #+end_example
 
 * Links
