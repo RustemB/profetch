@@ -1,10 +1,10 @@
 * profetch
 ** Screenshots
 
-| By [[https://github.com/q60][q60]]                          |
-| [[https://i.imgur.com/RgbGy58.jpg]] |
-|---------------------------------|
-| By me                           |
+| By [[https://github.com/q60][v]]    |
+| [[https://i.imgur.com/HbG9z6G.png]] |
+|-------------------------------------|
+| By me                               |
 | [[https://i.imgur.com/HKzf5DT.png]] |
 
 ** Requirements
