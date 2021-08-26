@@ -13,7 +13,7 @@
 
 ** Building
 #+begin_example
-  $ ./build.sh
+  $ make build
 #+end_example
 
 ** Using
