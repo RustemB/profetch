@@ -5,9 +5,9 @@
 |                                      |
 |--------------------------------------|
 | By [v](https://github.com/q60)       |
-| ![](https://i.imgur.com/HbG9z6G.png) |
+| ![v](https://i.imgur.com/HbG9z6G.png) |
 | By me                                |
-| ![](https://i.imgur.com/HKzf5DT.png) |
+| ![rustemb](https://user-images.githubusercontent.com/25725953/141845673-f8a7ea4c-5e2c-4f89-a6c2-aaa671f0204d.png) |
 
 ## Requirements
 
